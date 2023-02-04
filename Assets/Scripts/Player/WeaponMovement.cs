@@ -68,15 +68,15 @@ public class WeaponMovement : MonoBehaviour
         {
             if (!collision.gameObject.GetComponent<Movement>()) return;
             if (collision.gameObject.GetComponent<Movement>().knockback) return;
-            GetComponent<BoxCollider2D>().isTrigger = true;
-            StartCoroutine(collision.gameObject.GetComponent<Movement>().GetHit(target.gameObject.GetComponent<Enemy>().direction, 0.25f, GetComponent<BoxCollider2D>()));
+            GetComponent<PolygonCollider2D>().isTrigger = true;
+            StartCoroutine(collision.gameObject.GetComponent<Movement>().GetHit(target.gameObject.GetComponent<Enemy>().direction, 0.25f, GetComponent<PolygonCollider2D>()));
         }
         else if (collision.transform != target && (collision.gameObject.tag == "Enemy"))
         {
             if (!collision.gameObject.GetComponent<Enemy>()) return;
             if (collision.gameObject.GetComponent<Enemy>().knockback) return;
-            GetComponent<BoxCollider2D>().isTrigger = true;
-            StartCoroutine(collision.gameObject.GetComponent<Enemy>().GetHit(target.gameObject.GetComponent<Movement>().direction, 0.25f, GetComponent<BoxCollider2D>()));
+            GetComponent<PolygonCollider2D>().isTrigger = true;
+            StartCoroutine(collision.gameObject.GetComponent<Enemy>().GetHit(target.gameObject.GetComponent<Movement>().direction, 0.25f, GetComponent<PolygonCollider2D>()));
 
         }
         else if (collision.gameObject.tag != target.tag && !collisionEntered)

@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    public Rigidbody2D rb;
     public float speed;
-    public TrailRenderer tr;
     public WeaponMovement weapon;
     public bool knockback = false;
     public float knockbackForce = 1000f;
     public float dashingPower = 2f;
     public float dashingTime = 0.2f;
 
+    private Rigidbody2D rb;
+    private TrailRenderer tr;
     private bool canDash = true;
     private bool isDashing;
     private float dashingCooldown = 1f;
@@ -21,13 +21,17 @@ public class Movement : MonoBehaviour
 
     public Vector2 direction;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        tr = GetComponent<TrailRenderer>();
+    }
+
     void Start()
     {
         startRotationSpeed = weapon.orbitDegreesPerSec;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (knockback) return;
@@ -67,7 +71,7 @@ public class Movement : MonoBehaviour
         weapon.orbitDegreesPerSec = startRotationSpeed;
     }
 
-    public IEnumerator GetHit(Vector3 dir, float duration, BoxCollider2D collider)
+    public IEnumerator GetHit(Vector3 dir, float duration, PolygonCollider2D collider)
     {
         print("hit");
         knockback = true;

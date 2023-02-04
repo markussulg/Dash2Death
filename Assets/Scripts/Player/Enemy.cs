@@ -15,7 +15,19 @@ public class Enemy : MonoBehaviour
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();  
+        rb = GetComponent<Rigidbody2D>();
+
+        direction = (target.position - transform.position).normalized;
+
+        float angle = Vector3.Angle(Vector3.right, direction);
+        if (direction.y < 0.0f) angle = 360f - angle;
+
+        float diff = angle - weapon.transform.eulerAngles.z;
+        if (diff < 0f) diff = diff + 360;
+
+        weapon.rotateLeft = diff < 180f;
+        weapon.targetAngle = angle;
+        weapon.isRotating = true;
     }
 
     void Update()
@@ -26,7 +38,7 @@ public class Enemy : MonoBehaviour
         //direction = -direction;
         if (rb.velocity.magnitude > 0)
         {
-            float angle = Vector3.Angle(Vector3.left, rb.velocity.normalized);
+            float angle = Vector3.Angle(Vector3.right, rb.velocity.normalized);
             if (direction.y < 0.0f) angle = 360f - angle;
 
             float diff = angle - weapon.transform.eulerAngles.z;
@@ -38,7 +50,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public IEnumerator GetHit(Vector3 dir, float duration, BoxCollider2D collider)
+    public IEnumerator GetHit(Vector3 dir, float duration, PolygonCollider2D collider)
     {
         print("hit");
         knockback = true;
