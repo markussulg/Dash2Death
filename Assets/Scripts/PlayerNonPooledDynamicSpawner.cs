@@ -4,41 +4,61 @@ using UnityEngine;
 
 public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
 
+    public event Action<NetworkObject, NetworkObject> OnPlayerSpawned;
+
     public PlayerSO playerSO;
     public bool DestroyWithSpawner;
 
-    private GameObject playerSwordPrefabInstance;
-    private NetworkObject spawnedPlayerSword;
+    private GameObject playerSwordPrefab;
+    private GameObject playerVisualPrefab;
 
-    private GameObject playerVisualPrefabInstance;
-    private NetworkObject spawnedPlayerVisual;
+    public NetworkObject spawnedPlayerSword;
+    public NetworkObject spawnedPlayerVisual;
 
     public override void OnNetworkSpawn() {
         // Only the server spawns, clients will disable this component on their side
-        enabled = IsServer;
-        if (!enabled || playerSO == null) {
-            return;
-        }
+        playerSwordPrefab = playerSO.playerSwordPrefab;
+        playerVisualPrefab = playerSO.playerVisualPrefab;
 
-        NetworkManager.Singleton.OnClientConnectedCallback += Singleton_OnClientConnectedCallback;
+        enabled = IsOwner;
+        if (!enabled) return;
 
-        playerSwordPrefabInstance = Instantiate(playerSO.playerSwordPrefab);
-        playerVisualPrefabInstance = Instantiate(playerSO.playerVisualPrefab);
-
-        spawnedPlayerSword = playerSwordPrefabInstance.GetComponent<NetworkObject>();
-        spawnedPlayerVisual = playerVisualPrefabInstance.GetComponent<NetworkObject>();
-
-        spawnedPlayerSword.Spawn();
-        spawnedPlayerVisual.Spawn(); 
+        SpawnPlayerServerRpc(OwnerClientId);
     }
 
-    private void Singleton_OnClientConnectedCallback(ulong obj) {
-        NetworkObject clientPlayerNetworkObject = NetworkManager.SpawnManager.GetPlayerNetworkObject(obj);
+    [ServerRpc]
+    private void SpawnPlayerServerRpc(ulong clientId) {
+        NetworkObject playerSwordNetworkObject = Instantiate<NetworkObject>(
+            playerSwordPrefab.GetComponent<NetworkObject>());
 
-        spawnedPlayerSword.TrySetParent(clientPlayerNetworkObject);
-        spawnedPlayerVisual.TrySetParent(clientPlayerNetworkObject);
+        NetworkObject playerVisualNetworkObject = Instantiate<NetworkObject>(
+            playerVisualPrefab.GetComponent<NetworkObject>());
+
+        playerSwordNetworkObject.SpawnWithOwnership(clientId);
+        playerVisualNetworkObject.SpawnWithOwnership(clientId);
+
+        playerSwordNetworkObject.TrySetParent(transform);
+        playerVisualNetworkObject.TrySetParent(transform);
+
+        ClientRpcParams clientRpcParams = new ClientRpcParams {
+            Send = new ClientRpcSendParams {
+                TargetClientIds = new ulong[] { clientId }
+            }
+        };
+
+        PlayerSpawnedClientRpc(playerSwordNetworkObject, playerVisualNetworkObject, clientRpcParams);
     }
 
+    [ClientRpc]
+    private void PlayerSpawnedClientRpc(NetworkObjectReference playerSword, 
+        NetworkObjectReference playerVisual, ClientRpcParams clientRpcParams) {
+
+        spawnedPlayerSword = playerSword;
+        spawnedPlayerVisual = playerVisual;
+
+        OnPlayerSpawned?.Invoke(spawnedPlayerSword, spawnedPlayerVisual);
+        Debug.Log("caled");
+    }
 
     /*public override void OnNetworkDespawn() {
         if (IsServer && DestroyWithSpawner && m_SpawnedNetworkObject != null && m_SpawnedNetworkObject.IsSpawned) {

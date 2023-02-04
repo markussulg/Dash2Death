@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ac9fd80860a4c74987bf57688c264a8, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  playerSwordPrefab: {fileID: 7744792148771262101, guid: 9fcd7f643617ff74588a94a7afc10710, type: 3}
+  playerSwordPrefab: {fileID: 5368726861196292125, guid: a715d065d1ff5e147884dd8b8e13ee6f, type: 3}
   playerVisualPrefab: {fileID: 5140973880925438818, guid: 425215a78d09c1b4ca04d26f7b49dacc, type: 3}
   playerName: Player
