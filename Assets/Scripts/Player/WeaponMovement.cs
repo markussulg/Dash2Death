@@ -11,21 +11,13 @@ public class WeaponMovement : MonoBehaviour
     public float targetAngle;
     public bool rotateLeft = false;
 
-    private Rigidbody2D rb;
     private bool collisionEntered = false;
 
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
     public void Orbit()
     {
         if (target != null)
         {
-            //print(rotateLeft);
-            //print(transform.eulerAngles);
-            //print(direction);
-            // Keep us at orbitDistance from target
+            // rotate until close enough
             if (Mathf.Abs(transform.eulerAngles.z - Mathf.Abs(targetAngle)) > 1f)
             {
                 transform.position = target.position + (transform.position - target.position).normalized * orbitDistance;
@@ -46,35 +38,6 @@ public class WeaponMovement : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag != "Player" && !collisionEntered)
-        {
-            collisionEntered = true;
-            print("terrainCollider");
-            isRotating = false;
-            float angle = Vector3.Angle(Vector3.right, collision.contacts[0].normal);
-            if (collision.contacts[0].normal.y < 0.0f)
-            {
-                angle = 360f - angle;
-            }
-            float diff = angle - transform.eulerAngles.z;
-            if (diff < 0f)
-            {
-                diff = diff + 360;
-            }
-            if (diff < 180f)
-            {
-                rotateLeft = true;
-            }
-            else
-            {
-                rotateLeft = false;
-            }
-            StartCoroutine(moveSword(angle, 0.5f));
-            //rb.AddForce(collision.contacts[0].normal * 10f);
-        }
-    }
     IEnumerator moveSword(float direction, float duration)
     {
         float timeAggregate = 0f;
@@ -90,13 +53,49 @@ public class WeaponMovement : MonoBehaviour
             }
             else
             {
-                stop = true;                
+                stop = true;
 
             }
             yield return null;
 
         }
         collisionEntered = false;
-
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.transform != target && (collision.gameObject.tag == "Player"))
+        {
+            if (!collision.gameObject.GetComponent<Movement>()) return;
+            if (collision.gameObject.GetComponent<Movement>().knockback) return;
+            GetComponent<BoxCollider2D>().isTrigger = true;
+            StartCoroutine(collision.gameObject.GetComponent<Movement>().GetHit(target.gameObject.GetComponent<Enemy>().direction, 0.25f, GetComponent<BoxCollider2D>()));
+        }
+        else if (collision.transform != target && (collision.gameObject.tag == "Enemy"))
+        {
+            if (!collision.gameObject.GetComponent<Enemy>()) return;
+            if (collision.gameObject.GetComponent<Enemy>().knockback) return;
+            GetComponent<BoxCollider2D>().isTrigger = true;
+            StartCoroutine(collision.gameObject.GetComponent<Enemy>().GetHit(target.gameObject.GetComponent<Movement>().direction, 0.25f, GetComponent<BoxCollider2D>()));
+
+        }
+        else if (collision.gameObject.tag != target.tag && !collisionEntered)
+        {
+            collisionEntered = true;
+            isRotating = false;
+            float angle = Vector3.Angle(Vector3.right, collision.contacts[0].normal);
+            if (collision.contacts[0].normal.y < 0.0f)
+            {
+                angle = 360f - angle;
+            }
+            float diff = angle - transform.eulerAngles.z;
+            if (diff < 0f)
+            {
+                diff = diff + 360;
+            }
+            rotateLeft = diff < 180f;
+            StartCoroutine(moveSword(angle, 0.5f));
+        }
+    }
+
 }

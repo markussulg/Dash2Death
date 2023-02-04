@@ -32,11 +32,9 @@ public class RoundManager : NetworkBehaviour {
         if (IsServer) {
             timeRemaining.Value = maxRoundTimeInSeconds;
             currentRound.Value = startingRound;
+            PauseControls();
+            StartRoundCountdown();
         }
-    }
-
-    private void Start() {
-        timerIsRunning = true;
     }
 
     private void Update() {
@@ -59,15 +57,23 @@ public class RoundManager : NetworkBehaviour {
     }
 
     private void EndRound() {
+        PauseControls();
         if (currentRound.Value < maxRounds) {
             //Continue game
+            StartRoundCountdown();
         }
 
         //End the game.
     }
 
+    private void StartRoundCountdown() {
+        RoundManagerUI.Instance.StartCountdown(StartRound);
+    }
+
     private void StartRound() {
+        ResumeControls();
         ResetTimer();
+        timerIsRunning = true;
         currentRound.Value++;
 
         OnRoundStarted?.Invoke();
@@ -87,5 +93,13 @@ public class RoundManager : NetworkBehaviour {
 
     public int GetCurrentRound() {
         return currentRound.Value;
+    }
+
+    private void PauseControls() {
+        NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject().GetComponent<Movement>().enabled = false;
+    }
+
+    private void ResumeControls() {
+        NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject().GetComponent<Movement>().enabled = true;
     }
 }
