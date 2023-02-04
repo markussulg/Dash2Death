@@ -27,6 +27,10 @@ public class Movement : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         tr = GetComponent<TrailRenderer>();
     }
+    private void Start()
+    {
+        startRotationSpeed = weapon.orbitDegreesPerSec;
+    }
 
     private void HandlePlayerSpawned(NetworkObject playerSword) {
         weapon = playerSword.GetComponent<WeaponMovement>();
