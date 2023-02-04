@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class Movement : MonoBehaviour {
+public class Movement : NetworkBehaviour {
 
     [SerializeField] private Rigidbody2D body;
     [SerializeField] private float moveSpeed;
@@ -22,7 +23,15 @@ public class Movement : MonoBehaviour {
     }
 
     private void FixedUpdate() {
+        if (!IsOwner) return;
+
+        MovePlayerServerRpc();
+    }
+
+    [ServerRpc]
+    private void MovePlayerServerRpc() {
         body.velocity = direction * moveSpeed;
+        Debug.Log(body.velocity);
     }
 
     private void PlayerInputs() {

@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1841826230055925716}
   - component: {fileID: 1841826230055925717}
-  - component: {fileID: 1841826230055925719}
   - component: {fileID: -5486689109372816587}
-  - component: {fileID: 2713397534499386092}
-  - component: {fileID: -6097689503713550453}
+  - component: {fileID: -6977380827572194465}
+  - component: {fileID: -2640331176402623365}
+  - component: {fileID: 3091942561885860179}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -52,7 +52,7 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &1841826230055925719
+--- !u!114 &-5486689109372816587
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -61,7 +61,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1841826230055925722}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 50bdf2e2ad49aa44b8999e7b07aba0ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: -2640331176402623365}
+  moveSpeed: 10
+  rotationSpeed: 10
+--- !u!114 &-6977380827572194465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841826230055925722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df2868252ab5c4d1da357e8f11f1b524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SyncPositionX: 1
@@ -78,22 +93,7 @@ MonoBehaviour:
   ScaleThreshold: 0.01
   InLocalSpace: 0
   Interpolate: 1
---- !u!114 &-5486689109372816587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1841826230055925722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50bdf2e2ad49aa44b8999e7b07aba0ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  body: {fileID: 2713397534499386092}
-  moveSpeed: 10
-  rotationSpeed: 10
---- !u!50 &2713397534499386092
+--- !u!50 &-2640331176402623365
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -114,7 +114,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-6097689503713550453
+--- !u!114 &3091942561885860179
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
