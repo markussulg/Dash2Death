@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour
     public float speed;
     public TrailRenderer tr;
     public WeaponMovement weapon;
+    public bool knockback = false;
 
     private bool canDash = true;
     private bool isDashing;
@@ -28,6 +29,7 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (knockback) return;
         if (isDashing) return;
         direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
         rb.velocity = direction * speed;

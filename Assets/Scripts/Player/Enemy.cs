@@ -8,7 +8,8 @@ public class Enemy : MonoBehaviour
     public float speed = 5f;
     public WeaponMovement weapon;
     private Rigidbody2D rb;
-    private Vector3 direction;
+    public Vector3 direction;
+    public bool knockback;
     // Start is called before the first frame update
     void Awake()
     {
@@ -18,6 +19,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (knockback) return;
         direction = (target.position - transform.position).normalized;
         rb.velocity = direction * speed;
         //direction = -direction;

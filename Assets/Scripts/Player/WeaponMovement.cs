@@ -48,8 +48,27 @@ public class WeaponMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //if (collision.transform != target)
-        if (collision.gameObject.tag != "Player" && !collisionEntered)
+        if (collision.transform != target && (collision.gameObject.tag == "Player"))
+        {
+            if (collision.gameObject.GetComponent<Movement>().knockback) return;
+            print("collide");
+            collision.gameObject.GetComponent<Movement>().knockback = true;
+            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(target.gameObject.GetComponent<Enemy>().direction * 1000f);;
+            GetComponent<BoxCollider2D>().isTrigger = true;
+            StartCoroutine(wait(collision.gameObject.GetComponent<Movement>(), 0.25f));
+
+        }
+        else if (collision.transform != target && (collision.gameObject.tag == "Enemy"))
+        {
+            if (collision.gameObject.GetComponent<Enemy>().knockback) return;
+            print("collide");
+            collision.gameObject.GetComponent<Enemy>().knockback = true;
+            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(target.gameObject.GetComponent<Movement>().direction * 1000f); ;
+            GetComponent<BoxCollider2D>().isTrigger = true;
+            StartCoroutine(wait(collision.gameObject.GetComponent<Enemy>(), 0.25f));
+
+        }
+        else if (collision.gameObject.tag != "Player" && !collisionEntered)
         {
             collisionEntered = true;
             print("terrainCollider");
@@ -75,6 +94,18 @@ public class WeaponMovement : MonoBehaviour
             StartCoroutine(moveSword(angle, 0.5f));
             //rb.AddForce(collision.contacts[0].normal * 10f);
         }
+    }
+    IEnumerator wait(Movement movement, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        movement.knockback = false;
+        GetComponent<BoxCollider2D>().isTrigger = false;
+    }
+    IEnumerator wait(Enemy movement, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        movement.knockback = false;
+        GetComponent<BoxCollider2D>().isTrigger = false;
     }
     IEnumerator moveSword(float direction, float duration)
     {
