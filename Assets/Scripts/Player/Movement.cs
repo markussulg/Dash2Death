@@ -10,7 +10,6 @@ public class Movement : MonoBehaviour {
     public float knockbackForce = 1000f;
     public float dashingPower = 2f;
     public float dashingTime = 0.2f;
-    public PlayerCamera playerCameraPrefab;
 
     private Rigidbody2D rb;
     private TrailRenderer tr;
@@ -27,8 +26,6 @@ public class Movement : MonoBehaviour {
         playerSpawner.OnPlayerSpawned += HandlePlayerSpawned;
         rb = GetComponent<Rigidbody2D>();
         tr = GetComponent<TrailRenderer>();
-        PlayerCamera camera = GameObject.Instantiate(playerCameraPrefab);
-        camera.target = transform;
     }
 
     private void HandlePlayerSpawned(NetworkObject playerSword) {
