@@ -48,6 +48,7 @@ public class WeaponMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //if (collision.transform != target)
         if (collision.gameObject.tag != "Player" && !collisionEntered)
         {
             collisionEntered = true;
