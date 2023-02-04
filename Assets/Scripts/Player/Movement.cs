@@ -44,9 +44,6 @@ public class Movement : MonoBehaviour
             {
                 angle = 360f - angle;
             }
-            //print(angle);
-            print(angle);
-            print(weapon.transform.eulerAngles.z);
             float diff = angle - weapon.transform.eulerAngles.z;
             if (diff < 0f)
             {
