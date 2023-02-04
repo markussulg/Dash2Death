@@ -39,7 +39,7 @@ public class Movement : MonoBehaviour
         direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
         rb.velocity = direction * speed;
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        if ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Space)) && canDash)
         {
             weapon.orbitDegreesPerSec = startRotationSpeed * 2;
             StartCoroutine(Dash());
