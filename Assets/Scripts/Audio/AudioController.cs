@@ -18,4 +18,9 @@ public class AudioController : MonoBehaviour
     {
         Instance = this;
     }
+
+    public void PlayButtonClick()
+    {
+        clickUIButton.Play();
+    }
 }
