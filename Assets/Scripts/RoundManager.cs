@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RoundManager : NetworkBehaviour {
@@ -19,6 +20,8 @@ public class RoundManager : NetworkBehaviour {
     private int maxRounds = 3;
     private int startingRound = 1;
 
+    private float spawnCircleRadius = 5f;
+
     private void Awake() {
         if (Instance != null) {
             Destroy(gameObject);
@@ -26,6 +29,11 @@ public class RoundManager : NetworkBehaviour {
         }
 
         Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start() {
+        LobbyOrchestrator.Instance.OnGameStarted += HandleGameStarted;
     }
 
     public override void OnNetworkSpawn() {
@@ -33,7 +41,6 @@ public class RoundManager : NetworkBehaviour {
             timeRemaining.Value = maxRoundTimeInSeconds;
             currentRound.Value = startingRound;
             PauseControls();
-            StartRoundCountdown();
         }
     }
 
@@ -41,6 +48,26 @@ public class RoundManager : NetworkBehaviour {
         if (!IsOwner) return;
 
         UpdateTimer();
+    }
+
+    private void HandleGameStarted(int playerAmount) {
+        SetSpawnLocations(playerAmount);
+    }
+
+    private void SetSpawnLocations(int playerAmount) {
+        float angleIncrement = Mathf.FloorToInt(360f / playerAmount);
+
+        for (int i = 0; i < playerAmount; i++) {
+            transform.Rotate(new Vector3(0f, 0f, angleIncrement));
+            NetworkObject playerNO = NetworkManager.SpawnManager.GetPlayerNetworkObject((ulong)i);
+            SetPlayerSpawnServerRpc(playerNO, transform.forward * spawnCircleRadius);
+        }
+    }
+
+    [ServerRpc]
+    private void SetPlayerSpawnServerRpc(NetworkObjectReference player, Vector3 spawnLocation) {
+        NetworkObject playerNO = player;
+        playerNO.transform.position = spawnLocation;
     }
 
     private void UpdateTimer() {
