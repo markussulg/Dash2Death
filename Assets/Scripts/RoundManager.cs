@@ -10,7 +10,7 @@ public class RoundManager : NetworkBehaviour {
 
     public event Action OnRoundStarted;
 
-    [SerializeField] float maxRoundTimeInSeconds = 10;
+    [SerializeField] float maxRoundTimeInSeconds = 120;
 
     public NetworkVariable<float> timeRemaining = new NetworkVariable<float>();
     public bool timerIsRunning = false;

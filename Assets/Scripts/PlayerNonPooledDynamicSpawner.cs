@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
 
-    public event Action<NetworkObject, NetworkObject> OnPlayerSpawned;
+    public event Action<NetworkObject> OnPlayerSpawned;
 
     public PlayerSO playerSO;
     public bool DestroyWithSpawner;
@@ -31,14 +31,14 @@ public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
         NetworkObject playerSwordNetworkObject = Instantiate<NetworkObject>(
             playerSwordPrefab.GetComponent<NetworkObject>());
 
-        NetworkObject playerVisualNetworkObject = Instantiate<NetworkObject>(
-            playerVisualPrefab.GetComponent<NetworkObject>());
+        //NetworkObject playerVisualNetworkObject = Instantiate<NetworkObject>(
+        //    playerVisualPrefab.GetComponent<NetworkObject>());
 
         playerSwordNetworkObject.SpawnWithOwnership(clientId);
-        playerVisualNetworkObject.SpawnWithOwnership(clientId);
+        //playerVisualNetworkObject.SpawnWithOwnership(clientId);
 
         playerSwordNetworkObject.TrySetParent(transform);
-        playerVisualNetworkObject.TrySetParent(transform);
+        //playerVisualNetworkObject.TrySetParent(transform);
 
         ClientRpcParams clientRpcParams = new ClientRpcParams {
             Send = new ClientRpcSendParams {
@@ -46,17 +46,16 @@ public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
             }
         };
 
-        PlayerSpawnedClientRpc(playerSwordNetworkObject, playerVisualNetworkObject, clientRpcParams);
+        PlayerSpawnedClientRpc(playerSwordNetworkObject);
     }
 
     [ClientRpc]
-    private void PlayerSpawnedClientRpc(NetworkObjectReference playerSword, 
-        NetworkObjectReference playerVisual, ClientRpcParams clientRpcParams) {
+    private void PlayerSpawnedClientRpc(NetworkObjectReference playerSword) {
 
         spawnedPlayerSword = playerSword;
-        spawnedPlayerVisual = playerVisual;
+        //spawnedPlayerVisual = playerVisual;
 
-        OnPlayerSpawned?.Invoke(spawnedPlayerSword, spawnedPlayerVisual);
+        OnPlayerSpawned?.Invoke(spawnedPlayerSword);
     }
 
     /*public override void OnNetworkDespawn() {
