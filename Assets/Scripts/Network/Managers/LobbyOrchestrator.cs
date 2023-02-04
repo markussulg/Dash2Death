@@ -186,7 +186,7 @@ public class LobbyOrchestrator : NetworkBehaviour {
     private async void OnGameStart() {
         using (new Load("Starting the game...")) {
             await MatchmakingService.LockLobby();
-            NetworkManager.Singleton.SceneManager.LoadScene("Game", LoadSceneMode.Single);
+            NetworkManager.Singleton.SceneManager.LoadScene("Kits", LoadSceneMode.Single);
         }
     }
 
