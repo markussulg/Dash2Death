@@ -11,6 +11,7 @@ public class Movement : MonoBehaviour {
     public float wallKnockbackForce = 300f;
     public float dashingPower = 2f;
     public float dashingTime = 0.2f;
+    public GameObject canvas;
 
     private Rigidbody2D rb;
     private TrailRenderer tr;
@@ -78,8 +79,8 @@ public class Movement : MonoBehaviour {
     }
 
     public IEnumerator GetHit(Vector3 dir, float duration, PolygonCollider2D collider) {
-        print("hit");
         knockback = true;
+        canvas.SetActive(true);
         rb.AddForce(dir * knockbackForce);
         yield return new WaitForSeconds(duration);
         knockback = false;
