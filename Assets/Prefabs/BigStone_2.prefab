@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6178033365696815385}
   - component: {fileID: 6178033365696815386}
   m_Layer: 0
-  m_Name: SuurStone_2
+  m_Name: BigStone_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
