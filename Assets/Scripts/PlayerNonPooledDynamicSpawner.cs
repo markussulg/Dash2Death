@@ -57,7 +57,6 @@ public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
         spawnedPlayerVisual = playerVisual;
 
         OnPlayerSpawned?.Invoke(spawnedPlayerSword, spawnedPlayerVisual);
-        Debug.Log("caled");
     }
 
     /*public override void OnNetworkDespawn() {

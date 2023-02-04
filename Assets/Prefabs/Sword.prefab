@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5368726861196292122}
   - component: {fileID: 5368726861196292123}
-  - component: {fileID: 5368726861196292120}
   - component: {fileID: 5368726861196292118}
   - component: {fileID: 5368726861196292121}
+  - component: {fileID: 1098821842168369750}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -87,24 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5368726861196292120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5368726861196292125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48c33093c8ae3854585d94ec0362756b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  orbitDistance: 1
-  orbitDegreesPerSec: 180
-  isRotating: 0
-  targetAngle: 0
-  rotateLeft: 0
 --- !u!114 &5368726861196292118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,3 +129,21 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &1098821842168369750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5368726861196292125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c3d90dff0212c0448b88ecc779a5a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  orbitDistance: 1
+  orbitDegreesPerSec: 180
+  isRotating: 0
+  targetAngle: 0
+  rotateLeft: 0

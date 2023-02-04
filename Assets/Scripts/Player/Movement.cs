@@ -15,6 +15,7 @@ public class Movement : NetworkBehaviour {
     public float dashingPower = 2f;
     public float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
+    private float startRotationSpeed;
 
     private Vector2 direction;
 
@@ -27,36 +28,33 @@ public class Movement : NetworkBehaviour {
     private void HandlePlayerSpawned(NetworkObject playerSword, NetworkObject playerVisual) {
         weapon = playerSword.GetComponent<WeaponMovement>();
         weapon.target = transform;
+        startRotationSpeed = weapon.orbitDegreesPerSec;
     }
 
-    void Update()
-    {
-        if (!IsOwner) return;
+    // Update is called once per frame
+    void Update() {
         if (weapon == null) return;
-
         if (isDashing) return;
         direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
         rb.velocity = direction * speed;
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
-        {
-            
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash) {
+            weapon.orbitDegreesPerSec = startRotationSpeed * 2;
             StartCoroutine(Dash());
         }
-        if (rb.velocity.magnitude > 0)
-        {
-            float angle = Vector3.Angle(Vector3.right, direction);
-            if (direction.y < 0.0f)
-            {
+        if (rb.velocity.magnitude > 0) {
+            float angle = Vector3.Angle(Vector3.right, rb.velocity.normalized);
+            if (direction.y < 0.0f) {
                 angle = 360f - angle;
             }
-
-            if (Mathf.Abs(angle - weapon.transform.eulerAngles.z) > 180f)
-            {
+            float diff = angle - weapon.transform.eulerAngles.z;
+            if (diff < 0f) {
+                diff = diff + 360;
+            }
+            if (diff < 180f) {
                 weapon.rotateLeft = true;
             }
-            else
-            {
+            else {
                 weapon.rotateLeft = false;
             }
 
@@ -75,5 +73,6 @@ public class Movement : NetworkBehaviour {
         canDash = true;
         isDashing = false;
         tr.emitting = false;
+        weapon.orbitDegreesPerSec = startRotationSpeed;
     }
 }
