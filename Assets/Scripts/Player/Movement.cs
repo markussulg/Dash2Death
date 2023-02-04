@@ -14,6 +14,7 @@ public class Movement : MonoBehaviour
     public float dashingPower = 2f;
     public float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
+    private float startRotationSpeed;
 
 
     public Vector2 direction;
@@ -21,7 +22,7 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        startRotationSpeed = weapon.orbitDegreesPerSec;
     }
 
     // Update is called once per frame
@@ -33,12 +34,12 @@ public class Movement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
-            
+            weapon.orbitDegreesPerSec = startRotationSpeed * 2;
             StartCoroutine(Dash());
         }
         if (rb.velocity.magnitude > 0)
         {
-            float angle = Vector3.Angle(Vector3.right, direction);
+            float angle = Vector3.Angle(Vector3.right, rb.velocity.normalized);
             if (direction.y < 0.0f)
             {
                 angle = 360f - angle;
@@ -46,7 +47,12 @@ public class Movement : MonoBehaviour
             //print(angle);
             print(angle);
             print(weapon.transform.eulerAngles.z);
-            if (Mathf.Abs(angle - weapon.transform.eulerAngles.z) > 180f)
+            float diff = angle - weapon.transform.eulerAngles.z;
+            if (diff < 0f)
+            {
+                diff = diff + 360;
+            }
+            if (diff < 180f)
             {
                 weapon.rotateLeft = true;
             }
@@ -70,5 +76,6 @@ public class Movement : MonoBehaviour
         canDash = true;
         isDashing = false;
         tr.emitting = false;
+        weapon.orbitDegreesPerSec = startRotationSpeed;
     }
 }

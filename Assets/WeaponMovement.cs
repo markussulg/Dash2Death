@@ -14,6 +14,7 @@ public class WeaponMovement : MonoBehaviour
     {
         if (target != null)
         {
+            //print(rotateLeft);
             //print(transform.eulerAngles);
             //print(direction);
             // Keep us at orbitDistance from target

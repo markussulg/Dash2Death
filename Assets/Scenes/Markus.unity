@@ -797,7 +797,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 968160899}
   orbitDistance: 1
-  orbitDegreesPerSec: 180
+  orbitDegreesPerSec: 270
   isRotating: 0
   targetAngle: 0
   rotateLeft: 0
