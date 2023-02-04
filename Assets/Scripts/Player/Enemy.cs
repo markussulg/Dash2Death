@@ -7,16 +7,17 @@ public class Enemy : MonoBehaviour
     public Transform target;
     public float speed = 5f;
     public WeaponMovement weapon;
-    private Rigidbody2D rb;
     public Vector3 direction;
     public bool knockback;
-    // Start is called before the first frame update
+    public float knockbackForce = 1000f;
+
+    private Rigidbody2D rb;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();  
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (knockback) return;
@@ -26,26 +27,25 @@ public class Enemy : MonoBehaviour
         if (rb.velocity.magnitude > 0)
         {
             float angle = Vector3.Angle(Vector3.left, rb.velocity.normalized);
-            if (direction.y < 0.0f)
-            {
-                angle = 360f - angle;
-            }
-            float diff = angle - weapon.transform.eulerAngles.z;
-            if (diff < 0f)
-            {
-                diff = diff + 360;
-            }
-            if (diff < 180f)
-            {
-                weapon.rotateLeft = true;
-            }
-            else
-            {
-                weapon.rotateLeft = false;
-            }
+            if (direction.y < 0.0f) angle = 360f - angle;
 
+            float diff = angle - weapon.transform.eulerAngles.z;
+            if (diff < 0f) diff = diff + 360;
+
+            weapon.rotateLeft = diff < 180f;
             weapon.targetAngle = angle;
             weapon.isRotating = true;
         }
+    }
+
+    public IEnumerator GetHit(Vector3 dir, float duration, BoxCollider2D collider)
+    {
+        print("hit");
+        knockback = true;
+        rb.AddForce(dir * knockbackForce);
+        yield return new WaitForSeconds(duration);
+        knockback = false;
+        collider.isTrigger = false;
+
     }
 }
