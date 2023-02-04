@@ -60,6 +60,7 @@ public class WeaponMovement : MonoBehaviour
             yield return null;
 
         }
+        GetComponent<PolygonCollider2D>().isTrigger = false;
         collisionEntered = false;
     }
 
@@ -103,7 +104,10 @@ public class WeaponMovement : MonoBehaviour
                 diff = diff + 360;
             }
             rotateLeft = diff < 180f;
+            GetComponent<PolygonCollider2D>().isTrigger = true;
             StartCoroutine(moveSword(angle, 0.5f));
+            StartCoroutine(target.gameObject.GetComponent<Movement>().WallHit(collision.contacts[0].normal, 0.2f, GetComponent<PolygonCollider2D>()));
+
         }
     }
 

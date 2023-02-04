@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour {
     public WeaponMovement weapon;
     public bool knockback = false;
     public float knockbackForce = 1000f;
+    public float wallKnockbackForce = 300f;
     public float dashingPower = 2f;
     public float dashingTime = 0.2f;
 
@@ -80,6 +81,16 @@ public class Movement : MonoBehaviour {
         print("hit");
         knockback = true;
         rb.AddForce(dir * knockbackForce);
+        yield return new WaitForSeconds(duration);
+        knockback = false;
+        collider.isTrigger = false;
+    }
+
+    public IEnumerator WallHit(Vector3 dir, float duration, PolygonCollider2D collider)
+    {
+        print("hit");
+        knockback = true;
+        rb.AddForce(dir * wallKnockbackForce);
         yield return new WaitForSeconds(duration);
         knockback = false;
         collider.isTrigger = false;
