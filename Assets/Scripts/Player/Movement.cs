@@ -7,7 +7,6 @@ public class Movement : MonoBehaviour
     public Rigidbody2D body;
     public float speed;
 
-
     Vector2 direction;
 
     // Start is called before the first frame update
