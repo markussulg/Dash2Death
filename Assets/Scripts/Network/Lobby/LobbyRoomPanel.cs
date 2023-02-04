@@ -4,10 +4,11 @@ using Unity.Services.Lobbies.Models;
 using UnityEngine;
 
 public class LobbyRoomPanel : MonoBehaviour {
-    [SerializeField] private float _difficultyDialMaxAngle = 100f;
+    //[SerializeField] private float _difficultyDialMaxAngle = 100f;
 
-    [SerializeField] private TMP_Text _nameText, _typeText, _playerCountText;
-    [SerializeField] private Transform _difficultyMeter;
+    [SerializeField]
+    private TMP_Text _nameText, _playerCountText;
+    //[SerializeField] private Transform _difficultyMeter;
 
     public Lobby Lobby { get; private set; }
 
