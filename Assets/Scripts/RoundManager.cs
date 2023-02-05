@@ -125,8 +125,11 @@ public class RoundManager : NetworkBehaviour {
         ResumeControls();
         ResetTimer();
         timerIsRunning = true;
-        currentRound.Value++;
 
+        if (!IsServer) {
+            currentRound.Value++;
+        }
+       
         OnRoundStarted?.Invoke();
     }
 
