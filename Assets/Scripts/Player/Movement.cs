@@ -4,13 +4,13 @@ using Unity.Netcode;
 using UnityEngine;
 
 public class Movement : MonoBehaviour {
-    public float speed;
+    public float speed = 5;
     public WeaponMovement weapon;
     public PlayerCanvas playerCanvas;
     public bool knockback = false;
     public float knockbackForce = 1000f;
-    public float wallKnockbackForce = 300f;
-    public float dashingPower = 2f;
+    public float wallKnockbackForce = 500f;
+    public float dashingPower = 20f;
     public float dashingTime = 0.2f;
     public GameObject canvas;
 
@@ -26,7 +26,10 @@ public class Movement : MonoBehaviour {
     [SerializeField] PlayerNonPooledDynamicSpawner playerSpawner;
 
     private void Awake() {
-        playerSpawner.OnPlayerSpawned += HandlePlayerSpawned;
+        if (playerSpawner != null)
+        {
+            playerSpawner.OnPlayerSpawned += HandlePlayerSpawned;
+        }
         rb = GetComponent<Rigidbody2D>();
         tr = GetComponent<TrailRenderer>();
     }
