@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
 
-    public event Action<NetworkObject> OnPlayerSpawned;
+    public event Action<NetworkObject, NetworkObject, NetworkObject, NetworkObject> OnPlayerSpawned;
 
     public PlayerSO playerSO;
     public bool DestroyWithSpawner;
@@ -20,6 +20,10 @@ public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
     public NetworkObject spawnedPlayerSword;
     public NetworkObject spawnedPlayerVisual;
     public NetworkObject spawnedPlayerCamera;
+
+    public NetworkObject spawnedPlayerCanvas;
+    public NetworkObject spawnedPlayerHealthFill;
+    public NetworkObject spawnedPlayerHealth;
 
     public override void OnNetworkSpawn() {
         // Only the server spawns, clients will disable this component on their side
@@ -80,7 +84,7 @@ public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
         playerHealthNetworkObject.TrySetParent(playerCanvasNetworkObject.transform);
         playerHealthFillNetworkObject.TrySetParent(playerHealthNetworkObject.transform);
 
-        playerCanvasNetworkObject.transform.localPosition = Vector3.zero;
+        //playerCanvasNetworkObject.transform.localPosition = Vector3.zero;
         playerHealthNetworkObject.transform.localPosition = Vector3.zero;
         playerHealthFillNetworkObject.transform.localPosition = Vector3.zero;
 
@@ -90,11 +94,13 @@ public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
             }
         };
 
-        PlayerSpawnedClientRpc(playerSwordNetworkObject, playerCameraNetworkObject, clientRpcParams);
+        PlayerSpawnedClientRpc(playerSwordNetworkObject, playerCameraNetworkObject, playerCanvasNetworkObject,
+            playerHealthNetworkObject, playerHealthFillNetworkObject, clientRpcParams);
     }
 
     [ClientRpc]
     private void PlayerSpawnedClientRpc(NetworkObjectReference playerSword, NetworkObjectReference playerCamera,
+        NetworkObjectReference playerCanvas, NetworkObjectReference playerHealth, NetworkObjectReference playerHealthFill,
         ClientRpcParams clientRpcParams) {
 
         spawnedPlayerSword = playerSword;
@@ -102,7 +108,11 @@ public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
         spawnedPlayerCamera.transform.localPosition = new Vector3(0, 0, -16);
         //spawnedPlayerVisual = playerVisual;
 
-        OnPlayerSpawned?.Invoke(spawnedPlayerSword);
+        spawnedPlayerCanvas = playerCanvas;
+        spawnedPlayerHealth = playerHealth;
+        spawnedPlayerHealthFill = playerHealthFill;
+
+        OnPlayerSpawned?.Invoke(spawnedPlayerSword, spawnedPlayerCanvas, spawnedPlayerHealth, spawnedPlayerHealthFill);
     }
 
     /*public override void OnNetworkDespawn() {
