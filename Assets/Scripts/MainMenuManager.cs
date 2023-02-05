@@ -29,6 +29,23 @@ public class MainMenuManager : MonoBehaviour
         SceneManager.LoadScene(2);
     }
 
+    public void StartLevelEasy()
+    {
+        SceneManager.LoadScene(4);
+    }
+    public void StartLevelMedium()
+    {
+        SceneManager.LoadScene(7);
+    }
+    public void StartLevelHard()
+    {
+        SceneManager.LoadScene(6);
+    }
+    public void StartLevelArena()
+    {
+        SceneManager.LoadScene(8);
+    }
+
     public void ExitGame()
     {
 #if UNITY_EDITOR

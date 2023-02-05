@@ -23,4 +23,19 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Auth.unity
     guid: 137b107ef845d884e988672ec406a996
+  - enabled: 1
+    path: Assets/Scenes/Levels/Easy.unity
+    guid: ca7d0770dc53b3e43afec508dda90e13
+  - enabled: 1
+    path: Assets/Scenes/Levels/EasyLevel.unity
+    guid: baf4ddfdb1c781943816aeac1af278dd
+  - enabled: 1
+    path: Assets/Scenes/Levels/Hard.unity
+    guid: 76385a3e003cca94795464c9d757f9d8
+  - enabled: 1
+    path: Assets/Scenes/Levels/Medium.unity
+    guid: 4b113edae64ee4e49b431890b38aee42
+  - enabled: 1
+    path: Assets/Scenes/Levels/Arena.unity
+    guid: c81183cc7ea083949845d8a2cfed1569
   m_configObjects: {}
