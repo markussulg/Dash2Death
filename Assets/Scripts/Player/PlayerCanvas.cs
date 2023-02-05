@@ -31,7 +31,8 @@ public class PlayerCanvas : NetworkBehaviour
 
     [ServerRpc]
     private void UpdateHealthServerRpc(float value) {
-        
+        healthFillAmount.Value = value;
+        healthFill.fillAmount = value;
     }
 
     [ClientRpc]
@@ -48,7 +49,7 @@ public class PlayerCanvas : NetworkBehaviour
         currentHealth -= 1;
         print(currentHealth);
         healthFill.fillAmount = 1.0f * currentHealth / maxHealth;
-        healthFillAmount.Value = healthFill.fillAmount;
+        UpdateHealthServerRpc(healthFill.fillAmount);
         if (currentHealth<=0)
         {
             return true;
