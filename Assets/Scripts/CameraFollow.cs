@@ -19,7 +19,7 @@ public class CameraFollow : NetworkBehaviour {
         if (followTarget == null) return;
         if (!IsOwner) return;
 
-        transform.position = followTarget.position + cameraOffset;
+        transform.position = new Vector3 (followTarget.position.x, followTarget.position.y, transform.position.z);
     }
 
     public void SetFollowTarget(Transform followTarget) {
