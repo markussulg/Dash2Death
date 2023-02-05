@@ -24,6 +24,11 @@ public class MainMenuManager : MonoBehaviour
         SceneManager.LoadScene(0); //To be finished
     }
 
+    public void StartLevelTutoral()
+    {
+        SceneManager.LoadScene(2);
+    }
+
     public void ExitGame()
     {
 #if UNITY_EDITOR
