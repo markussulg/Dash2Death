@@ -80,6 +80,8 @@ public class Movement : MonoBehaviour {
     }
 
     public IEnumerator GetHit(Vector3 dir, float duration, PolygonCollider2D collider) {
+        if (playerCanvas == null) yield return new WaitForEndOfFrame();
+
         bool isDead = playerCanvas.DecreaseHealth();
         if (isDead)
         {
