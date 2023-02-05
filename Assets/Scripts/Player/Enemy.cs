@@ -56,6 +56,7 @@ public class Enemy : MonoBehaviour
     {
         if (knockback) return;
         if (isDashing) return;
+        if(target == null) rb.velocity = Vector3.zero;
         dashTimer += Time.deltaTime;
         offsetTimer += Time.deltaTime;
         //Vector3 offset = new Vector3(Random.Range(-4, 4), Random.Range(-4, 4), 0);
@@ -116,20 +117,17 @@ public class Enemy : MonoBehaviour
 
     public IEnumerator GetHit(Vector3 dir, float duration, PolygonCollider2D collider)
     {
-        print("hit");
         bool isDead = playerCanvas.DecreaseHealth();
+        knockback = true;
+        rb.AddForce(dir * knockbackForce);
+        yield return new WaitForSeconds(duration);
+        knockback = false;
+        collider.isTrigger = false;
         if (isDead)
-        {
+        {            
             Destroy(gameObject);
-            collider.isTrigger = false;
-            yield break;
-        } else
-        {
-            knockback = true;
-            rb.AddForce(dir * knockbackForce);
-            yield return new WaitForSeconds(duration);
-            knockback = false;
-            collider.isTrigger = false;
-        }
+        } 
+        yield break;
     }
+
 }

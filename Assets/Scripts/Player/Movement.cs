@@ -5,13 +5,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Movement : MonoBehaviour {
-    public float speed;
+    public float speed = 5;
     public WeaponMovement weapon;
     public PlayerCanvas playerCanvas;
     public bool knockback = false;
     public float knockbackForce = 1000f;
-    public float wallKnockbackForce = 300f;
-    public float dashingPower = 2f;
+    public float wallKnockbackForce = 500f;
+    public float dashingPower = 20f;
     public float dashingTime = 0.2f;
     public GameObject canvas;
 
@@ -27,9 +27,20 @@ public class Movement : MonoBehaviour {
     [SerializeField] PlayerNonPooledDynamicSpawner playerSpawner;
 
     private void Awake() {
-        playerSpawner.OnPlayerSpawned += HandlePlayerSpawned;
+        if (playerSpawner != null)
+        {
+            playerSpawner.OnPlayerSpawned += HandlePlayerSpawned;
+        }
         rb = GetComponent<Rigidbody2D>();
         tr = GetComponent<TrailRenderer>();
+    }
+
+    private void Start()
+    {
+        if(startRotationSpeed == 0)
+        {
+            startRotationSpeed = weapon.orbitDegreesPerSec;
+        }
     }
 
     private void HandlePlayerSpawned(NetworkObject playerSword, NetworkObject playerCanvas,
@@ -79,22 +90,20 @@ public class Movement : MonoBehaviour {
         weapon.orbitDegreesPerSec = startRotationSpeed;
     }
 
-    public IEnumerator GetHit(Vector3 dir, float duration, PolygonCollider2D collider) {
+    public IEnumerator GetHit(Vector3 dir, float duration, PolygonCollider2D collider, bool getDmg = true) {
         if (playerCanvas != null) {
             bool isDead = playerCanvas.DecreaseHealth();
-            if (isDead) {
+            knockback = true;
+            rb.AddForce(dir * knockbackForce);
+            yield return new WaitForSeconds(duration);
+            knockback = false;
+            collider.isTrigger = false;
+            if (isDead)
+            {
                 canvas.SetActive(true);
-                collider.isTrigger = false;
                 Destroy(gameObject);
-                yield break;
-            }
-            else {
-                knockback = true;
-                rb.AddForce(dir * knockbackForce);
-                yield return new WaitForSeconds(duration);
-                knockback = false;
-                collider.isTrigger = false;
-            }
+            } 
+            yield break;
         }
     }
 
@@ -106,5 +115,10 @@ public class Movement : MonoBehaviour {
         yield return new WaitForSeconds(duration);
         knockback = false;
         collider.isTrigger = false;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<WeaponMovement>() == weapon) return;
     }
 }
