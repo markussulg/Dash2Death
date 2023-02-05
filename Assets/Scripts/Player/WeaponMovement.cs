@@ -66,6 +66,8 @@ public class WeaponMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log(collision.transform);
+
         if (target == null) return;
 
         Debug.Log("test");
