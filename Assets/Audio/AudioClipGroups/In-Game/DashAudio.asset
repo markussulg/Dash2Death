@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0f327426bee3f043b1e80c4072f9ac4, type: 3}
+  m_Name: DashAudio
+  m_EditorClassIdentifier: 
+  volumeMin: 0.9
+  volumeMax: 1
+  pitchMin: 1.2
+  pitchMax: 1
+  cooldown: 0.01
+  isLooped: 0
+  clips:
+  - {fileID: 8300000, guid: cbdc417f1100fa741a869112512b5eed, type: 3}
+  - {fileID: 8300000, guid: f2ab378707ccd1348846819b98acd548, type: 3}
+  - {fileID: 8300000, guid: 5b2baa043b9071f48848e70ac780cddb, type: 3}
+  - {fileID: 8300000, guid: 274c41d9bb1f88443897f74476d3b2cc, type: 3}
+  - {fileID: 8300000, guid: 493fb06aefc401940b844a83a38ebd33, type: 3}

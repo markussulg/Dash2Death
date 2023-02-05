@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0f327426bee3f043b1e80c4072f9ac4, type: 3}
   m_Name: MenuMusic
   m_EditorClassIdentifier: 
-  volumeMin: 1
-  volumeMax: 1
+  volumeMin: 0.8
+  volumeMax: 0.8
   pitchMin: 1
   pitchMax: 1
   cooldown: 0.1
