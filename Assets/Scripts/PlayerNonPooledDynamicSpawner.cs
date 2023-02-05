@@ -50,8 +50,7 @@ public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
 
         playerCameraNetworkObject.enabled = playerCameraNetworkObject.OwnerClientId == clientId;
         playerCameraNetworkObject.GetComponent<CameraFollow>().SetFollowTarget(transform);
-        playerCameraNetworkObject.transform.localPosition = playerCameraNetworkObject.transform.localPosition +
-            new Vector3(0, 0, -10);
+        playerCameraNetworkObject.transform.localPosition = new Vector3(0, 0, -10);
 
         ClientRpcParams clientRpcParams = new ClientRpcParams {
             Send = new ClientRpcSendParams {
@@ -59,13 +58,16 @@ public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
             }
         };
 
-        PlayerSpawnedClientRpc(playerSwordNetworkObject);
+        PlayerSpawnedClientRpc(playerSwordNetworkObject, playerCameraNetworkObject, clientRpcParams);
     }
 
     [ClientRpc]
-    private void PlayerSpawnedClientRpc(NetworkObjectReference playerSword) {
+    private void PlayerSpawnedClientRpc(NetworkObjectReference playerSword, NetworkObjectReference playerCamera,
+        ClientRpcParams clientRpcParams) {
 
         spawnedPlayerSword = playerSword;
+        spawnedPlayerCamera = playerCamera;
+        spawnedPlayerCamera.transform.localPosition = new Vector3(0, 0, -10);
         //spawnedPlayerVisual = playerVisual;
 
         OnPlayerSpawned?.Invoke(spawnedPlayerSword);
