@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
     public float dashDelay = 2f;
     public float dashingPower = 2f;
     public float dashingTime = 0.2f;
-    public List<Vector2> offsets = new List<Vector2>();
+    public List<Vector2> offsets = new List<Vector2>() { new Vector2(7, 7), new Vector2(-7, 7), new Vector2(-7, -7), new Vector2(7, -7)};
     public float offsetMaxTime = 2f;
 
     private Rigidbody2D rb;
@@ -56,6 +56,7 @@ public class Enemy : MonoBehaviour
     {
         if (knockback) return;
         if (isDashing) return;
+        if(target == null) rb.velocity = Vector3.zero;
         dashTimer += Time.deltaTime;
         offsetTimer += Time.deltaTime;
         //Vector3 offset = new Vector3(Random.Range(-4, 4), Random.Range(-4, 4), 0);
@@ -114,22 +115,23 @@ public class Enemy : MonoBehaviour
         //weapon.orbitDegreesPerSec = startRotationSpeed;
     }
 
-    public IEnumerator GetHit(Vector3 dir, float duration, PolygonCollider2D collider)
+    public IEnumerator GetHit(Vector3 dir, float duration, PolygonCollider2D collider, bool doDmg = true)
     {
-        print("hit");
-        bool isDead = playerCanvas.DecreaseHealth();
-        if (isDead)
+        bool isDead = false;
+        if(doDmg)
         {
-            Destroy(gameObject);
-            collider.isTrigger = false;
-            yield break;
-        } else
-        {
-            knockback = true;
-            rb.AddForce(dir * knockbackForce);
-            yield return new WaitForSeconds(duration);
-            knockback = false;
-            collider.isTrigger = false;
+            isDead = playerCanvas.DecreaseHealth();
         }
+        knockback = true;
+        rb.AddForce(dir * knockbackForce);
+        yield return new WaitForSeconds(duration);
+        knockback = false;
+        collider.isTrigger = false;
+        if (isDead)
+        {            
+            Destroy(gameObject);
+        } 
+        yield break;
     }
+
 }
