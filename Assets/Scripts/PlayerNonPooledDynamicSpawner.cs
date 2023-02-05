@@ -67,7 +67,7 @@ public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
 
         spawnedPlayerSword = playerSword;
         spawnedPlayerCamera = playerCamera;
-        spawnedPlayerCamera.transform.localPosition = new Vector3(0, 0, -10);
+        spawnedPlayerCamera.transform.localPosition = new Vector3(0, 0, -16);
         //spawnedPlayerVisual = playerVisual;
 
         OnPlayerSpawned?.Invoke(spawnedPlayerSword);

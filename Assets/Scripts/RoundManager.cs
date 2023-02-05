@@ -23,7 +23,7 @@ public class RoundManager : NetworkBehaviour {
     private int maxRounds = 3;
     private int startingRound = 1;
 
-    private float spawnCircleRadius = 12f;
+    private float spawnCircleRadius = 7f;
 
     private void Awake() {
         if (Instance != null) {
