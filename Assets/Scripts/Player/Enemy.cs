@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
     public float dashDelay = 2f;
     public float dashingPower = 2f;
     public float dashingTime = 0.2f;
+    public List<Vector2> offsets = new List<Vector2>();
+    public float offsetMaxTime = 2f;
 
     private Rigidbody2D rb;
     private TrailRenderer tr;
@@ -21,7 +23,9 @@ public class Enemy : MonoBehaviour
     private bool isDashing;
     private float dashingCooldown = 1f;
     private Vector2 delayedPos;
-    private Vector2 offset;
+    private Vector2 currentOffset = Vector2.zero;
+    private int currentOffsetNumber = 0;
+    private float offsetTimer = 0;
 
 
 
@@ -29,6 +33,7 @@ public class Enemy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         tr = GetComponent<TrailRenderer>();
+        currentOffset = offsets[0];
         if(false)
         {
             direction = (target.transform.position - transform.position).normalized;
@@ -51,26 +56,39 @@ public class Enemy : MonoBehaviour
         if (knockback) return;
         if (isDashing) return;
         dashTimer += Time.deltaTime;
+        offsetTimer += Time.deltaTime;
         //Vector3 offset = new Vector3(Random.Range(-4, 4), Random.Range(-4, 4), 0);
-        if (Vector2.Distance(target.transform.position, transform.position) < 10)
+        if (Vector2.Distance(target.transform.position + (Vector3)currentOffset, transform.position) < 3 || offsetTimer > offsetMaxTime)
         {
-            rb.velocity = Vector2.zero;
-            return;
+            offsetTimer = 0;
+            //rb.velocity = Vector2.zero;
+            // random change direction
+            if (1 == Random.Range(0, 2))
+            {
+                offsets.Reverse();
+                currentOffsetNumber -= 1;
+            }
+            currentOffsetNumber += 1;
+            if (currentOffsetNumber >= offsets.Count)
+            {
+
+                currentOffsetNumber = 0;
+            }
+            currentOffset = offsets[currentOffsetNumber];
         }
         if (dashTimer > dashDelay)
         {
             dashTimer = 0;
             StartCoroutine(Dash());
-            offset = new Vector2(1, 1);
             return;
         }
 
-        direction = (target.transform.position - transform.position).normalized;
+        direction = (target.transform.position + (Vector3)currentOffset - transform.position).normalized;
         rb.velocity = direction * speed;
         //direction = -direction;
         if (rb.velocity.magnitude > 0)
         {
-            float angle = Vector3.Angle(Vector3.left, rb.velocity.normalized);
+            float angle = Vector3.Angle(Vector3.right, rb.velocity.normalized);
             if (direction.y > 0.0f) angle = 360f - angle;
             //angle = angle / 2 - 90;
             float diff = angle - weapon.transform.eulerAngles.z;
