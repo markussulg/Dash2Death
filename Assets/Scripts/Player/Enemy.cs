@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     public float dashingTime = 0.2f;
     public List<Vector2> offsets = new List<Vector2>() { new Vector2(7, 7), new Vector2(-7, 7), new Vector2(-7, -7), new Vector2(7, -7)};
     public float offsetMaxTime = 2f;
+    public bool isHardEnemy = false;
 
     private Rigidbody2D rb;
     private TrailRenderer tr;
@@ -35,7 +36,7 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         tr = GetComponent<TrailRenderer>();
         currentOffset = offsets[0];
-        if(false)
+        if(isHardEnemy)
         {
             direction = (target.transform.position - transform.position).normalized;
 
@@ -59,6 +60,12 @@ public class Enemy : MonoBehaviour
         if(target == null) rb.velocity = Vector3.zero;
         dashTimer += Time.deltaTime;
         offsetTimer += Time.deltaTime;
+
+        if(isHardEnemy)
+        {
+            currentOffset = Vector2.zero;
+        }
+
         //Vector3 offset = new Vector3(Random.Range(-4, 4), Random.Range(-4, 4), 0);
         if (Vector2.Distance(target.transform.position + (Vector3)currentOffset, transform.position) < 3 || offsetTimer > offsetMaxTime)
         {
@@ -81,7 +88,7 @@ public class Enemy : MonoBehaviour
         if (dashTimer > dashDelay)
         {
             dashTimer = 0;
-            StartCoroutine(Dash());
+            if(!isHardEnemy) StartCoroutine(Dash());
             return;
         }
 
@@ -90,7 +97,16 @@ public class Enemy : MonoBehaviour
         //direction = -direction;
         if (rb.velocity.magnitude > 0)
         {
-            float angle = Vector3.Angle(Vector3.right, rb.velocity.normalized);
+            float angle;
+            if(isHardEnemy)
+            {
+                angle = Vector3.Angle(Vector3.left, rb.velocity.normalized);
+            }
+            else
+            {
+                angle = Vector3.Angle(Vector3.right, rb.velocity.normalized);
+
+            }
             if (direction.y > 0.0f) angle = 360f - angle;
             //angle = angle / 2 - 90;
             float diff = angle - weapon.transform.eulerAngles.z;
