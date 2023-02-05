@@ -80,22 +80,21 @@ public class Movement : MonoBehaviour {
     }
 
     public IEnumerator GetHit(Vector3 dir, float duration, PolygonCollider2D collider) {
-        if (playerCanvas == null) yield return new WaitForEndOfFrame();
-
-        bool isDead = playerCanvas.DecreaseHealth();
-        if (isDead)
-        {
-            canvas.SetActive(true);
-            collider.isTrigger = false;
-            Destroy(gameObject);
-            yield break;
-        } else
-        {
-            knockback = true;
-            rb.AddForce(dir * knockbackForce);
-            yield return new WaitForSeconds(duration);
-            knockback = false;
-            collider.isTrigger = false;
+        if (playerCanvas != null) {
+            bool isDead = playerCanvas.DecreaseHealth();
+            if (isDead) {
+                canvas.SetActive(true);
+                collider.isTrigger = false;
+                Destroy(gameObject);
+                yield break;
+            }
+            else {
+                knockback = true;
+                rb.AddForce(dir * knockbackForce);
+                yield return new WaitForSeconds(duration);
+                knockback = false;
+                collider.isTrigger = false;
+            }
         }
     }
 
