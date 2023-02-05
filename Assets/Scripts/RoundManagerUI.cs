@@ -55,6 +55,7 @@ public class RoundManagerUI : NetworkBehaviour {
     }
     public void StartCountdown(Action callback) {
         StartCoroutine(StartCountdownTimer(callback));
+        StartCoroutine(StartChangingNetworkVariable());
     }
 
     private IEnumerator StartCountdownTimer(Action callback) {
