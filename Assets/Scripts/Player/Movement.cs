@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Movement : MonoBehaviour {
     public float speed;
@@ -31,9 +32,12 @@ public class Movement : MonoBehaviour {
         tr = GetComponent<TrailRenderer>();
     }
 
-    private void HandlePlayerSpawned(NetworkObject playerSword) {
+    private void HandlePlayerSpawned(NetworkObject playerSword, NetworkObject playerCanvas,
+        NetworkObject playerHealth, NetworkObject playerHealthFill) {
         weapon = playerSword.GetComponent<WeaponMovement>();
         weapon.target = transform;
+        this.playerCanvas = playerCanvas.GetComponent<PlayerCanvas>();
+        this.playerCanvas.healthFill = playerHealthFill.GetComponent<Image>();
         startRotationSpeed = weapon.orbitDegreesPerSec;
     }
 
