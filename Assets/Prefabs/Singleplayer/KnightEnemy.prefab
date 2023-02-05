@@ -254,10 +254,14 @@ MonoBehaviour:
   direction: {x: 0, y: 0, z: 0}
   knockback: 0
   knockbackForce: 1000
-  dashDelay: 2
-  dashingPower: 2
+  dashDelay: 0.6
+  dashingPower: 20
   dashingTime: 0.2
-  offsets: []
+  offsets:
+  - {x: 7, y: 7}
+  - {x: -7, y: 7}
+  - {x: -7, y: -7}
+  - {x: 7, y: -7}
   offsetMaxTime: 2
 --- !u!1001 &3822046523232991962
 PrefabInstance:
