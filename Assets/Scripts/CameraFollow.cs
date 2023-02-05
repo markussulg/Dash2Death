@@ -9,8 +9,8 @@ public class CameraFollow : NetworkBehaviour {
     private Vector3 cameraOffset = new Vector3(0, 0, -10);
 
     public override void OnNetworkSpawn() {
-        enabled = IsOwner;
-        if (!enabled) return;
+        gameObject.SetActive(IsOwner);
+        if (gameObject.activeSelf) return;
 
         //followTarget = NetworkManager.SpawnManager.GetLocalPlayerObject().transform;
     }
