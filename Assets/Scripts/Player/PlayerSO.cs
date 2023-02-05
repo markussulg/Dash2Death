@@ -10,4 +10,8 @@ public class PlayerSO : ScriptableObject {
     public GameObject playerCameraPrefab;
     public string playerName;
 
+    public GameObject playerCanvasPrefab;
+    public GameObject playerHealthPrefab;
+    public GameObject playerHealthFillPrefab;
+
 }
