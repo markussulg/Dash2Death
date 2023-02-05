@@ -254,10 +254,14 @@ MonoBehaviour:
   direction: {x: 0, y: 0, z: 0}
   knockback: 0
   knockbackForce: 1000
-  dashDelay: 2
-  dashingPower: 2
+  dashDelay: 0.6
+  dashingPower: 20
   dashingTime: 0.2
-  offsets: []
+  offsets:
+  - {x: 7, y: 7}
+  - {x: -7, y: 7}
+  - {x: -7, y: -7}
+  - {x: 7, y: -7}
   offsetMaxTime: 2
 --- !u!1 &5956451906303609125
 GameObject:
@@ -404,6 +408,7 @@ MonoBehaviour:
   isRotating: 0
   targetAngle: 0
   rotateLeft: 0
+  isStick: 0
 --- !u!1001 &7648278664634761261
 PrefabInstance:
   m_ObjectHideFlags: 0
