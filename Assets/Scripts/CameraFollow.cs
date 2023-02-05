@@ -9,14 +9,15 @@ public class CameraFollow : NetworkBehaviour {
     private Vector3 cameraOffset = new Vector3(0, 0, -10);
 
     public override void OnNetworkSpawn() {
-        //enabled = IsOwner;
-        //if (!enabled) return;
+        enabled = IsOwner;
+        if (!enabled) return;
 
         //followTarget = NetworkManager.SpawnManager.GetLocalPlayerObject().transform;
     }
 
     private void LateUpdate() {
         if (followTarget == null) return;
+        if (!IsOwner) return;
 
         transform.position = followTarget.position + cameraOffset;
     }
