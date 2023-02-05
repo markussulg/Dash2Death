@@ -126,7 +126,7 @@ public class RoundManager : NetworkBehaviour {
         ResetTimer();
         timerIsRunning = true;
 
-        if (!IsServer) {
+        if (IsServer) {
             currentRound.Value++;
         }
        
