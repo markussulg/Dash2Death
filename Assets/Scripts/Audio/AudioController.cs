@@ -13,6 +13,8 @@ public class AudioController : MonoBehaviour
     [Header("Game Sounds")]
     [Space]
     public AudioClipGroup dashAudio;
+    public AudioClipGroup playerHitAudio;
+    public AudioClipGroup solidHitAudio;
 
     public static AudioController Instance;
 
@@ -36,6 +38,21 @@ public class AudioController : MonoBehaviour
     public void PlayButtonClick()
     {
         clickUIButton.Play();
+    }
+
+    public void PlayDashAudio()
+    {
+        dashAudio.Play();
+    }
+
+    public void PlaySolidHitAudio()
+    {
+        solidHitAudio.Play(); 
+    }
+
+    public void PlayPlayerHitAudio()
+    {
+        playerHitAudio.Play();
     }
 
     IEnumerator AudioDelay()

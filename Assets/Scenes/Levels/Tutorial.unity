@@ -479,6 +479,69 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+--- !u!1 &712742832
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 712742835}
+  - component: {fileID: 712742834}
+  - component: {fileID: 712742833}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &712742833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712742832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aab911db08898743a303c0adf8d8437, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSourcePrefab: {fileID: 1422517623276486994, guid: 8125390fc7ed8af4ea0789c40a3147cf, type: 3}
+--- !u!114 &712742834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712742832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1368321741485142b0df104080e58db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickUIButton: {fileID: 11400000, guid: 8ffabcd5c7674474697dd84bca83b526, type: 2}
+  menuMusic: {fileID: 11400000, guid: 94f260d5c930caf40ba6658cd273973d, type: 2}
+  dashAudio: {fileID: 11400000, guid: e664df2436745e449b55778c90a9f2f4, type: 2}
+  playerHitAudio: {fileID: 11400000, guid: 768fb3820db38854d8b48673cb8f9247, type: 2}
+  solidHitAudio: {fileID: 11400000, guid: 3d63994d0ebd59048920fec85fca1fdb, type: 2}
+--- !u!4 &712742835
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712742832}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 571.6796, y: 348.61942, z: -5.321297}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &736598133
 GameObject:
   m_ObjectHideFlags: 0

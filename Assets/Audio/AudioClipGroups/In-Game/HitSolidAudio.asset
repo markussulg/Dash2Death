@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0f327426bee3f043b1e80c4072f9ac4, type: 3}
-  m_Name: HitSolid
+  m_Name: HitSolidAudio
   m_EditorClassIdentifier: 
-  volumeMin: 0.7
+  volumeMin: 1
   volumeMax: 1
-  pitchMin: 1.2
-  pitchMax: 0.7
-  cooldown: 0.4
+  pitchMin: 0.9
+  pitchMax: 1.1
+  cooldown: 0.01
   isLooped: 0
-  clips: []
+  clips:
+  - {fileID: 8300000, guid: bf999d74402725a4ebe2d9d1788214ac, type: 3}
+  - {fileID: 8300000, guid: 3df72906e51e18c4d8eccdd73b13d569, type: 3}

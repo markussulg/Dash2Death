@@ -68,6 +68,7 @@ public class Movement : MonoBehaviour {
     }
 
     private IEnumerator Dash() {
+        AudioController.Instance.PlayDashAudio();
         canDash = false;
         isDashing = true;
         rb.velocity = direction * dashingPower;
@@ -81,6 +82,7 @@ public class Movement : MonoBehaviour {
 
     public IEnumerator GetHit(Vector3 dir, float duration, PolygonCollider2D collider) {
         if (playerCanvas != null) {
+            AudioController.Instance.PlayPlayerHitAudio();
             bool isDead = playerCanvas.DecreaseHealth();
             if (isDead) {
                 canvas.SetActive(true);
@@ -100,6 +102,7 @@ public class Movement : MonoBehaviour {
 
     public IEnumerator WallHit(Vector3 dir, float duration, PolygonCollider2D collider)
     {
+        AudioController.Instance.PlaySolidHitAudio();
         print("hit");
         knockback = true;
         rb.AddForce(dir * wallKnockbackForce);
