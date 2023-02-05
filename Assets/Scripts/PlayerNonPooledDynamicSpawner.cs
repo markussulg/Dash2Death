@@ -21,6 +21,7 @@ public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
         // Only the server spawns, clients will disable this component on their side
         playerSwordPrefab = playerSO.playerSwordPrefab;
         playerVisualPrefab = playerSO.playerVisualPrefab;
+        playerCameraPrefab = playerSO.playerCameraPrefab;
 
         enabled = IsOwner;
         if (!enabled) return;
@@ -33,14 +34,23 @@ public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
         NetworkObject playerSwordNetworkObject = Instantiate<NetworkObject>(
             playerSwordPrefab.GetComponent<NetworkObject>());
 
+        NetworkObject playerCameraNetworkObject = Instantiate<NetworkObject>(
+            playerCameraPrefab.GetComponent<NetworkObject>());
+
         //NetworkObject playerVisualNetworkObject = Instantiate<NetworkObject>(
         //    playerVisualPrefab.GetComponent<NetworkObject>());
 
         playerSwordNetworkObject.SpawnWithOwnership(clientId);
         //playerVisualNetworkObject.SpawnWithOwnership(clientId);
+        playerCameraNetworkObject.SpawnWithOwnership(clientId);
 
         playerSwordNetworkObject.TrySetParent(transform);
         //playerVisualNetworkObject.TrySetParent(transform);
+        playerCameraNetworkObject.TrySetParent(transform);
+
+        playerCameraNetworkObject.enabled = playerCameraNetworkObject.OwnerClientId == clientId;
+        playerCameraNetworkObject.GetComponent<CameraFollow>().SetFollowTarget(transform);
+        playerCameraNetworkObject.transform.localPosition = new Vector3(0, 0, -10);
 
         ClientRpcParams clientRpcParams = new ClientRpcParams {
             Send = new ClientRpcSendParams {
@@ -48,13 +58,16 @@ public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
             }
         };
 
-        PlayerSpawnedClientRpc(playerSwordNetworkObject);
+        PlayerSpawnedClientRpc(playerSwordNetworkObject, playerCameraNetworkObject, clientRpcParams);
     }
 
     [ClientRpc]
-    private void PlayerSpawnedClientRpc(NetworkObjectReference playerSword) {
+    private void PlayerSpawnedClientRpc(NetworkObjectReference playerSword, NetworkObjectReference playerCamera,
+        ClientRpcParams clientRpcParams) {
 
         spawnedPlayerSword = playerSword;
+        spawnedPlayerCamera = playerCamera;
+        spawnedPlayerCamera.transform.localPosition = new Vector3(0, 0, -10);
         //spawnedPlayerVisual = playerVisual;
 
         OnPlayerSpawned?.Invoke(spawnedPlayerSword);
