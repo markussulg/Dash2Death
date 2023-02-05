@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
     public float dashDelay = 2f;
     public float dashingPower = 2f;
     public float dashingTime = 0.2f;
-    public List<Vector2> offsets = new List<Vector2>();
+    public List<Vector2> offsets = new List<Vector2>() { new Vector2(7, 7), new Vector2(-7, 7), new Vector2(-7, -7), new Vector2(7, -7)};
     public float offsetMaxTime = 2f;
 
     private Rigidbody2D rb;
@@ -115,9 +115,13 @@ public class Enemy : MonoBehaviour
         //weapon.orbitDegreesPerSec = startRotationSpeed;
     }
 
-    public IEnumerator GetHit(Vector3 dir, float duration, PolygonCollider2D collider)
+    public IEnumerator GetHit(Vector3 dir, float duration, PolygonCollider2D collider, bool doDmg = true)
     {
-        bool isDead = playerCanvas.DecreaseHealth();
+        bool isDead = false;
+        if(doDmg)
+        {
+            isDead = playerCanvas.DecreaseHealth();
+        }
         knockback = true;
         rb.AddForce(dir * knockbackForce);
         yield return new WaitForSeconds(duration);

@@ -11,8 +11,10 @@ public class WeaponMovement : MonoBehaviour
     public bool isRotating = false;
     public float targetAngle;
     public bool rotateLeft = false;
+    public bool isStick = false;
 
     private bool collisionEntered = false;
+
 
     public void Orbit()
     {
@@ -92,10 +94,10 @@ public class WeaponMovement : MonoBehaviour
             GetComponent<PolygonCollider2D>().isTrigger = true;
             if (target.GetComponent<Enemy>() == null)
             {
-                StartCoroutine(collision.gameObject.GetComponent<Enemy>().GetHit(target.gameObject.GetComponent<Movement>().direction, 0.25f, GetComponent<PolygonCollider2D>()));
+                StartCoroutine(collision.gameObject.GetComponent<Enemy>().GetHit(target.gameObject.GetComponent<Movement>().direction, 0.25f, GetComponent<PolygonCollider2D>(), !isStick));
             } else
             {
-                StartCoroutine(collision.gameObject.GetComponent<Enemy>().GetHit(target.gameObject.GetComponent<Enemy>().direction, 0.25f, GetComponent<PolygonCollider2D>()));
+                StartCoroutine(collision.gameObject.GetComponent<Enemy>().GetHit(target.gameObject.GetComponent<Enemy>().direction, 0.25f, GetComponent<PolygonCollider2D>(), !isStick));
             }
 
         }
