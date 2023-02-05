@@ -84,7 +84,7 @@ public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
         playerHealthNetworkObject.TrySetParent(playerCanvasNetworkObject.transform);
         playerHealthFillNetworkObject.TrySetParent(playerHealthNetworkObject.transform);
 
-        //playerCanvasNetworkObject.transform.localPosition = Vector3.zero;
+        playerCanvasNetworkObject.transform.localPosition = new Vector3(0, -1, 0);
         playerHealthNetworkObject.transform.localPosition = Vector3.zero;
         playerHealthFillNetworkObject.transform.localPosition = Vector3.zero;
 
@@ -109,6 +109,7 @@ public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
         //spawnedPlayerVisual = playerVisual;
 
         spawnedPlayerCanvas = playerCanvas;
+        spawnedPlayerCanvas.transform.localPosition = new Vector3(0, -1, 0);
         spawnedPlayerHealth = playerHealth;
         spawnedPlayerHealthFill = playerHealthFill;
 
