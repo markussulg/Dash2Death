@@ -23,7 +23,7 @@ public class RoundManager : NetworkBehaviour {
     private int maxRounds = 3;
     private int startingRound = 1;
 
-    private float spawnCircleRadius = 5f;
+    private float spawnCircleRadius = 12f;
 
     private void Awake() {
         if (Instance != null) {
@@ -82,6 +82,14 @@ public class RoundManager : NetworkBehaviour {
     private void SetPlayerSpawnServerRpc(NetworkObjectReference player, Vector3 spawnLocation) {
         Debug.Log(spawnLocation);
 
+        NetworkObject playerNO = player;
+        playerNO.transform.position = spawnLocation;
+
+        SetPlayerSpawnClientRpc(player, spawnLocation);
+    }
+
+    [ClientRpc]
+    private void SetPlayerSpawnClientRpc(NetworkObjectReference player, Vector3 spawnLocation) {
         NetworkObject playerNO = player;
         playerNO.transform.position = spawnLocation;
     }
