@@ -37,10 +37,7 @@ public class Movement : MonoBehaviour {
 
     private void Start()
     {
-        if(startRotationSpeed == 0)
-        {
-            startRotationSpeed = weapon.orbitDegreesPerSec;
-        }
+        
     }
 
     private void HandlePlayerSpawned(NetworkObject playerSword, NetworkObject playerCanvas,
@@ -49,7 +46,9 @@ public class Movement : MonoBehaviour {
         weapon.target = transform;
         this.playerCanvas = playerCanvas.GetComponent<PlayerCanvas>();
         this.playerCanvas.healthFill = playerHealthFill.GetComponent<Image>();
-        startRotationSpeed = weapon.orbitDegreesPerSec;
+        if (startRotationSpeed == 0) {
+            startRotationSpeed = weapon.orbitDegreesPerSec;
+        }
     }
 
     void Update() {
