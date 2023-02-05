@@ -131,6 +131,8 @@ public class RoundManager : NetworkBehaviour {
     }
 
     private void ResetTimer() {
+        if (!IsServer) return;
+
         timeRemaining.Value = maxRoundTimeInSeconds;
     }
 

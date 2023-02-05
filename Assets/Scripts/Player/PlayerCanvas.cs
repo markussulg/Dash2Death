@@ -29,6 +29,11 @@ public class PlayerCanvas : NetworkBehaviour
         UpdateHealthClientRpc(current);
     }
 
+    [ServerRpc]
+    private void UpdateHealthServerRpc(float value) {
+        
+    }
+
     [ClientRpc]
     public void UpdateHealthClientRpc(float value) {
         healthFill.fillAmount = value;
