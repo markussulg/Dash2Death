@@ -12,6 +12,7 @@ public class AudioController : MonoBehaviour
 
     [Header("Game Sounds")]
     [Space]
+    public AudioClipGroup dashAudio;
 
     public static AudioController Instance;
 
