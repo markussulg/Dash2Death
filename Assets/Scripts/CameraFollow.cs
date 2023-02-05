@@ -16,6 +16,8 @@ public class CameraFollow : NetworkBehaviour {
     }
 
     private void LateUpdate() {
+        if (followTarget == null) return;
+
         transform.position = followTarget.position + cameraOffset;
     }
 
