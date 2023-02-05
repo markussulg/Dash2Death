@@ -50,7 +50,7 @@ public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
 
         playerCameraNetworkObject.enabled = playerCameraNetworkObject.OwnerClientId == clientId;
         playerCameraNetworkObject.GetComponent<CameraFollow>().SetFollowTarget(transform);
-        playerCameraNetworkObject.transform.localPosition = new Vector3(0, 0, -10);
+        playerCameraNetworkObject.transform.localPosition = new Vector3(0, 0, -16);
 
         ClientRpcParams clientRpcParams = new ClientRpcParams {
             Send = new ClientRpcSendParams {
