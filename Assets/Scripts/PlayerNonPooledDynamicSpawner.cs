@@ -111,7 +111,9 @@ public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
         spawnedPlayerCanvas = playerCanvas;
         spawnedPlayerCanvas.transform.localPosition = new Vector3(0, -1, 0);
         spawnedPlayerHealth = playerHealth;
+        spawnedPlayerHealth.transform.localPosition = Vector3.zero;
         spawnedPlayerHealthFill = playerHealthFill;
+        spawnedPlayerHealthFill.transform.localPosition = Vector3.zero;
 
         OnPlayerSpawned?.Invoke(spawnedPlayerSword, spawnedPlayerCanvas, spawnedPlayerHealth, spawnedPlayerHealthFill);
     }
