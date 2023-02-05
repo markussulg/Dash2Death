@@ -60,7 +60,7 @@ public class RoundManager : NetworkBehaviour {
         for (int i = 0; i < playerAmount; i++) {
             transform.Rotate(new Vector3(0f, 0f, angleIncrement));
             NetworkObject playerNO = NetworkManager.SpawnManager.GetPlayerNetworkObject((ulong)i);
-            SetPlayerSpawnServerRpc(playerNO, transform.forward * spawnCircleRadius);
+            SetPlayerSpawnServerRpc(playerNO, transform.right * spawnCircleRadius);
         }
     }
 
@@ -68,6 +68,8 @@ public class RoundManager : NetworkBehaviour {
     private void SetPlayerSpawnServerRpc(NetworkObjectReference player, Vector3 spawnLocation) {
         NetworkObject playerNO = player;
         playerNO.transform.position = spawnLocation;
+
+        Debug.Log(playerNO);
     }
 
     private void UpdateTimer() {
