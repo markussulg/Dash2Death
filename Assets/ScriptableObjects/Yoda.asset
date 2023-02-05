@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ac9fd80860a4c74987bf57688c264a8, type: 3}
+  m_Name: Yoda
+  m_EditorClassIdentifier: 
+  playerSwordPrefab: {fileID: 2004216278617007643, guid: ed6f446d0ae79e449813e96191810073, type: 3}
+  playerVisualPrefab: {fileID: 0}
+  playerCameraPrefab: {fileID: 8362454494088722935, guid: 3e591b2163d81c244ba6a3822d077bd4, type: 3}
+  playerName: Knight
+  playerCanvasPrefab: {fileID: 5285506379247422027, guid: 0e145e6256ed8ab46a8f995b0d76f8e7, type: 3}
+  playerHealthPrefab: {fileID: 2472613909972763362, guid: 498bca6285c359a4087f49d934d479be, type: 3}
+  playerHealthFillPrefab: {fileID: 4535567976270206058, guid: 42e8ac8cee24a414eab6e3692722c5e0, type: 3}
