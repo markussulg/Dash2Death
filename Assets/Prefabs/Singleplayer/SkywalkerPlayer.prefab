@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 189293065014638266}
   m_Layer: 0
   m_Name: SkywalkerPlayer
-  m_TagString: Enemy
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
