@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0f327426bee3f043b1e80c4072f9ac4, type: 3}
-  m_Name: MenuButtons
+  m_Name: ButtonHover
   m_EditorClassIdentifier: 
-  volumeMin: 0.7
-  volumeMax: 1
+  volumeMin: 0.8
+  volumeMax: 0.8
   pitchMin: 1.2
   pitchMax: 0.7
-  cooldown: 0.01
+  cooldown: 0.1
   isLooped: 0
   clips:
-  - {fileID: 8300000, guid: e4d675a359bffff4bab13b9bb6162d6d, type: 3}
+  - {fileID: 8300000, guid: 0e2493d53be33d340aad7b669ef095f8, type: 3}

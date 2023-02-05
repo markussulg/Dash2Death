@@ -8,6 +8,7 @@ public class AudioController : MonoBehaviour
     [Header("UI Sounds")]
     [Space]
     public AudioClipGroup clickUIButton;
+    public AudioClipGroup hoverUIButton;
     public AudioClipGroup menuMusic;
 
     [Header("Game Sounds")]
@@ -33,6 +34,11 @@ public class AudioController : MonoBehaviour
         {
             menuMusic.Play();
         }
+    }
+
+    public void PlayHoverAudio()
+    {
+        hoverUIButton.Play();
     }
 
     public void PlayButtonClick()
