@@ -60,6 +60,7 @@ public class WeaponMovement : MonoBehaviour
             yield return null;
 
         }
+        GetComponent<PolygonCollider2D>().isTrigger = false;
         collisionEntered = false;
     }
 
@@ -85,7 +86,13 @@ public class WeaponMovement : MonoBehaviour
             if (!collision.gameObject.GetComponent<Enemy>()) return;
             if (collision.gameObject.GetComponent<Enemy>().knockback) return;
             GetComponent<PolygonCollider2D>().isTrigger = true;
-            StartCoroutine(collision.gameObject.GetComponent<Enemy>().GetHit(target.gameObject.GetComponent<Movement>().direction, 0.25f, GetComponent<PolygonCollider2D>()));
+            if (target.GetComponent<Enemy>() == null)
+            {
+                StartCoroutine(collision.gameObject.GetComponent<Enemy>().GetHit(target.gameObject.GetComponent<Movement>().direction, 0.25f, GetComponent<PolygonCollider2D>()));
+            } else
+            {
+                StartCoroutine(collision.gameObject.GetComponent<Enemy>().GetHit(target.gameObject.GetComponent<Enemy>().direction, 0.25f, GetComponent<PolygonCollider2D>()));
+            }
 
         }
         else if (collision.gameObject.tag != target.tag && !collisionEntered)
@@ -103,7 +110,13 @@ public class WeaponMovement : MonoBehaviour
                 diff = diff + 360;
             }
             rotateLeft = diff < 180f;
+            GetComponent<PolygonCollider2D>().isTrigger = true;
             StartCoroutine(moveSword(angle, 0.5f));
+            if (target.tag == "Player")
+            {
+                StartCoroutine(target.gameObject.GetComponent<Movement>().WallHit(collision.contacts[0].normal, 0.2f, GetComponent<PolygonCollider2D>()));
+            }
+
         }
     }
 
