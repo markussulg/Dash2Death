@@ -661,11 +661,11 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 0
-  cloudProjectId: f2aa6812-ef8c-4e26-943d-d7e24ac4755e
+  cloudProjectId: 6c719b1e-1253-4cf5-b139-0d4372dfd553
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Game Jam (2)
-  organizationId: kpmaku
+  projectName: Game Jam
+  organizationId: sukuswarrior
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 

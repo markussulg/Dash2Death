@@ -43,6 +43,11 @@ public class LobbyOrchestrator : NetworkBehaviour {
         NetworkObject.DestroyWithScene = true;
     }
 
+    public void ReturnToMain()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     #region Main Lobby
 
     private async void OnLobbySelected(Lobby lobby) {
