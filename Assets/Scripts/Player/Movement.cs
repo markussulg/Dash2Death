@@ -6,6 +6,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour {
     public float speed;
     public WeaponMovement weapon;
+    public PlayerCanvas playerCanvas;
     public bool knockback = false;
     public float knockbackForce = 1000f;
     public float wallKnockbackForce = 300f;
@@ -79,12 +80,21 @@ public class Movement : MonoBehaviour {
     }
 
     public IEnumerator GetHit(Vector3 dir, float duration, PolygonCollider2D collider) {
-        knockback = true;
-        canvas.SetActive(true);
-        rb.AddForce(dir * knockbackForce);
-        yield return new WaitForSeconds(duration);
-        knockback = false;
-        collider.isTrigger = false;
+        bool isDead = playerCanvas.DecreaseHealth();
+        if (isDead)
+        {
+            canvas.SetActive(true);
+            collider.isTrigger = false;
+            Destroy(gameObject);
+            yield break;
+        } else
+        {
+            knockback = true;
+            rb.AddForce(dir * knockbackForce);
+            yield return new WaitForSeconds(duration);
+            knockback = false;
+            collider.isTrigger = false;
+        }
     }
 
     public IEnumerator WallHit(Vector3 dir, float duration, PolygonCollider2D collider)

@@ -86,7 +86,13 @@ public class WeaponMovement : MonoBehaviour
             if (!collision.gameObject.GetComponent<Enemy>()) return;
             if (collision.gameObject.GetComponent<Enemy>().knockback) return;
             GetComponent<PolygonCollider2D>().isTrigger = true;
-            StartCoroutine(collision.gameObject.GetComponent<Enemy>().GetHit(target.gameObject.GetComponent<Movement>().direction, 0.25f, GetComponent<PolygonCollider2D>()));
+            if (target.GetComponent<Enemy>() == null)
+            {
+                StartCoroutine(collision.gameObject.GetComponent<Enemy>().GetHit(target.gameObject.GetComponent<Movement>().direction, 0.25f, GetComponent<PolygonCollider2D>()));
+            } else
+            {
+                StartCoroutine(collision.gameObject.GetComponent<Enemy>().GetHit(target.gameObject.GetComponent<Enemy>().direction, 0.25f, GetComponent<PolygonCollider2D>()));
+            }
 
         }
         else if (collision.gameObject.tag != target.tag && !collisionEntered)

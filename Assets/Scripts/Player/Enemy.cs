@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     public Movement target;
     public float speed = 5f;
     public WeaponMovement weapon;
+    public PlayerCanvas playerCanvas;
     public Vector3 direction;
     public bool knockback;
     public float knockbackForce = 1000f;
@@ -116,11 +117,19 @@ public class Enemy : MonoBehaviour
     public IEnumerator GetHit(Vector3 dir, float duration, PolygonCollider2D collider)
     {
         print("hit");
-        knockback = true;
-        rb.AddForce(dir * knockbackForce);
-        yield return new WaitForSeconds(duration);
-        knockback = false;
-        collider.isTrigger = false;
-
+        bool isDead = playerCanvas.DecreaseHealth();
+        if (isDead)
+        {
+            Destroy(gameObject);
+            collider.isTrigger = false;
+            yield break;
+        } else
+        {
+            knockback = true;
+            rb.AddForce(dir * knockbackForce);
+            yield return new WaitForSeconds(duration);
+            knockback = false;
+            collider.isTrigger = false;
+        }
     }
 }
