@@ -13,6 +13,10 @@ public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
     private GameObject playerVisualPrefab;
     private GameObject playerCameraPrefab;
 
+    private GameObject playerCanvasPrefab;
+    private GameObject playerHealthPrefab;
+    private GameObject playerHealthFillPrefab;
+
     public NetworkObject spawnedPlayerSword;
     public NetworkObject spawnedPlayerVisual;
     public NetworkObject spawnedPlayerCamera;
@@ -22,6 +26,10 @@ public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
         playerSwordPrefab = playerSO.playerSwordPrefab;
         playerVisualPrefab = playerSO.playerVisualPrefab;
         playerCameraPrefab = playerSO.playerCameraPrefab;
+
+        playerCanvasPrefab = playerSO.playerCanvasPrefab;
+        playerHealthPrefab = playerSO.playerHealthPrefab;
+        playerHealthFillPrefab = playerSO.playerHealthFillPrefab;
 
         enabled = IsOwner;
         if (!enabled) return;
@@ -50,7 +58,31 @@ public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
 
         playerCameraNetworkObject.enabled = playerCameraNetworkObject.OwnerClientId == clientId;
         playerCameraNetworkObject.GetComponent<CameraFollow>().SetFollowTarget(transform);
-        playerCameraNetworkObject.transform.localPosition = new Vector3(0, 0, -10);
+        playerCameraNetworkObject.transform.localPosition = new Vector3(0, 0, -16);
+
+
+        //HEALTH BAR:
+
+        NetworkObject playerCanvasNetworkObject = Instantiate<NetworkObject>(
+            playerCanvasPrefab.GetComponent<NetworkObject>());
+
+        NetworkObject playerHealthNetworkObject = Instantiate<NetworkObject>(
+            playerHealthPrefab.GetComponent<NetworkObject>());
+
+        NetworkObject playerHealthFillNetworkObject = Instantiate<NetworkObject>(
+            playerHealthFillPrefab.GetComponent<NetworkObject>());
+
+        playerCanvasNetworkObject.SpawnWithOwnership(clientId);
+        playerHealthNetworkObject.SpawnWithOwnership(clientId);
+        playerHealthFillNetworkObject.SpawnWithOwnership(clientId);
+
+        playerCanvasNetworkObject.TrySetParent(transform);
+        playerHealthNetworkObject.TrySetParent(playerCanvasNetworkObject.transform);
+        playerHealthFillNetworkObject.TrySetParent(playerHealthNetworkObject.transform);
+
+        playerCanvasNetworkObject.transform.localPosition = Vector3.zero;
+        playerHealthNetworkObject.transform.localPosition = Vector3.zero;
+        playerHealthFillNetworkObject.transform.localPosition = Vector3.zero;
 
         ClientRpcParams clientRpcParams = new ClientRpcParams {
             Send = new ClientRpcSendParams {
@@ -67,7 +99,7 @@ public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
 
         spawnedPlayerSword = playerSword;
         spawnedPlayerCamera = playerCamera;
-        spawnedPlayerCamera.transform.localPosition = new Vector3(0, 0, -10);
+        spawnedPlayerCamera.transform.localPosition = new Vector3(0, 0, -16);
         //spawnedPlayerVisual = playerVisual;
 
         OnPlayerSpawned?.Invoke(spawnedPlayerSword);
