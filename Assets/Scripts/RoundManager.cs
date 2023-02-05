@@ -21,7 +21,7 @@ public class RoundManager : NetworkBehaviour {
 
     private NetworkVariable<int> currentRound = new NetworkVariable<int>();
     private int maxRounds = 3;
-    private int startingRound = 1;
+    private int startingRound = 0;
 
     private float spawnCircleRadius = 7f;
 
