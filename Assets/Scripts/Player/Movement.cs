@@ -75,22 +75,19 @@ public class Movement : MonoBehaviour {
         weapon.orbitDegreesPerSec = startRotationSpeed;
     }
 
-    public IEnumerator GetHit(Vector3 dir, float duration, PolygonCollider2D collider) {
+    public IEnumerator GetHit(Vector3 dir, float duration, PolygonCollider2D collider, bool getDmg = true) {
         bool isDead = playerCanvas.DecreaseHealth();
+        knockback = true;
+        rb.AddForce(dir * knockbackForce);
+        yield return new WaitForSeconds(duration);
+        knockback = false;
+        collider.isTrigger = false;
         if (isDead)
         {
             canvas.SetActive(true);
-            collider.isTrigger = false;
             Destroy(gameObject);
-            yield break;
-        } else
-        {
-            knockback = true;
-            rb.AddForce(dir * knockbackForce);
-            yield return new WaitForSeconds(duration);
-            knockback = false;
-            collider.isTrigger = false;
-        }
+        } 
+        yield break;
     }
 
     public IEnumerator WallHit(Vector3 dir, float duration, PolygonCollider2D collider)
@@ -101,5 +98,10 @@ public class Movement : MonoBehaviour {
         yield return new WaitForSeconds(duration);
         knockback = false;
         collider.isTrigger = false;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<WeaponMovement>() == weapon) return;
     }
 }
