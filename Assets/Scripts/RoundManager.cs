@@ -80,10 +80,10 @@ public class RoundManager : NetworkBehaviour {
 
     [ServerRpc]
     private void SetPlayerSpawnServerRpc(NetworkObjectReference player, Vector3 spawnLocation) {
+        Debug.Log(spawnLocation);
+
         NetworkObject playerNO = player;
         playerNO.transform.position = spawnLocation;
-
-        Debug.Log(playerNO);
     }
 
     private void UpdateTimer() {
