@@ -68,6 +68,8 @@ public class WeaponMovement : MonoBehaviour
     {
         if (target == null) return;
 
+        Debug.Log("test");
+
         if (collision.transform != target && (collision.gameObject.tag == "Player"))
         {
             if (!collision.gameObject.GetComponent<Movement>()) return;
