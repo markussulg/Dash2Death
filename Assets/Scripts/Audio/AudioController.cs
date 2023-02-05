@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,11 +22,24 @@ public class AudioController : MonoBehaviour
 
     private void Start()
     {
-        menuMusic.Play();
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            StartCoroutine(AudioDelay());
+        }
+        else
+        {
+            menuMusic.Play();
+        }
     }
 
     public void PlayButtonClick()
     {
         clickUIButton.Play();
+    }
+
+    IEnumerator AudioDelay()
+    {
+        yield return new WaitForSeconds(0.25f);
+        menuMusic.Play();
     }
 }
