@@ -205,8 +205,9 @@ public class LobbyOrchestrator : NetworkBehaviour {
         using (new Load("Starting the game...")) {
             await MatchmakingService.LockLobby();
             NetworkManager.Singleton.SceneManager.LoadScene("Kits", LoadSceneMode.Single);
-            OnGameStarted?.Invoke(_playersInLobby.Count);
         }
+
+        OnGameStarted?.Invoke(_playersInLobby.Count);
     }
 
     #endregion

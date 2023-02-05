@@ -6,6 +6,7 @@ using UnityEngine;
 public class CameraFollow : NetworkBehaviour {
 
     private Transform followTarget;
+    private Vector3 cameraOffset = new Vector3(0, 0, -10);
 
     public override void OnNetworkSpawn() {
         enabled = IsOwner;
@@ -15,7 +16,7 @@ public class CameraFollow : NetworkBehaviour {
     }
 
     private void LateUpdate() {
-        transform.position = followTarget.position;
+        transform.position = followTarget.position + cameraOffset;
     }
 
     public void SetFollowTarget(Transform followTarget) {

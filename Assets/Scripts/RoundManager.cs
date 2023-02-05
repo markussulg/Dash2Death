@@ -4,8 +4,11 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RoundManager : NetworkBehaviour {
+
+    private const string GAME_SCENE_NAME = "Kits";
 
     public static RoundManager Instance;
 
@@ -34,6 +37,11 @@ public class RoundManager : NetworkBehaviour {
 
     private void Start() {
         LobbyOrchestrator.Instance.OnGameStarted += HandleGameStarted;
+        SceneManager.sceneLoaded += HandleSceneLoaded;
+    }
+
+    private void OnDisable() {
+        SceneManager.sceneLoaded -= HandleSceneLoaded;
     }
 
     public override void OnNetworkSpawn() {
@@ -52,6 +60,12 @@ public class RoundManager : NetworkBehaviour {
 
     private void HandleGameStarted(int playerAmount) {
         SetSpawnLocations(playerAmount);
+    }
+
+    private void HandleSceneLoaded(Scene scene, LoadSceneMode loadSceneMode) {
+        if (scene.name != GAME_SCENE_NAME) return;
+
+        StartRoundCountdown();
     }
 
     private void SetSpawnLocations(int playerAmount) {
