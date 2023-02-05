@@ -11,9 +11,11 @@ public class PlayerNonPooledDynamicSpawner : NetworkBehaviour {
 
     private GameObject playerSwordPrefab;
     private GameObject playerVisualPrefab;
+    private GameObject playerCameraPrefab;
 
     public NetworkObject spawnedPlayerSword;
     public NetworkObject spawnedPlayerVisual;
+    public NetworkObject spawnedPlayerCamera;
 
     public override void OnNetworkSpawn() {
         // Only the server spawns, clients will disable this component on their side

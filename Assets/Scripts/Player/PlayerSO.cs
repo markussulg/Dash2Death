@@ -7,6 +7,7 @@ public class PlayerSO : ScriptableObject {
 
     public GameObject playerSwordPrefab;
     public GameObject playerVisualPrefab;
+    public GameObject playerCameraPrefab;
     public string playerName;
 
 }

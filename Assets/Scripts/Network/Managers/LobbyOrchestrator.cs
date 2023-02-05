@@ -12,10 +12,23 @@ using UnityEngine.SceneManagement;
 ///     but the transport and RPC logic remains here. It's possible we could pull
 /// </summary>
 public class LobbyOrchestrator : NetworkBehaviour {
-    
+
+    public static LobbyOrchestrator Instance;
+
+    public event Action<int> OnGameStarted;
+
     [SerializeField] private MainLobbyScreen _mainLobbyScreen;
     [SerializeField] private CreateLobbyScreen _createScreen;
     [SerializeField] private RoomScreen _roomScreen;
+
+    private void Awake() {
+        if (Instance != null) {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
 
     private void Start() {
         _mainLobbyScreen.gameObject.SetActive(true);
@@ -193,6 +206,8 @@ public class LobbyOrchestrator : NetworkBehaviour {
             await MatchmakingService.LockLobby();
             NetworkManager.Singleton.SceneManager.LoadScene("Kits", LoadSceneMode.Single);
         }
+
+        OnGameStarted?.Invoke(_playersInLobby.Count);
     }
 
     #endregion
