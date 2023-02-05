@@ -16,3 +16,6 @@ MonoBehaviour:
   playerVisualPrefab: {fileID: 0}
   playerCameraPrefab: {fileID: 8362454494088722935, guid: 3e591b2163d81c244ba6a3822d077bd4, type: 3}
   playerName: Knight
+  playerCanvasPrefab: {fileID: 5285506379247422027, guid: 0e145e6256ed8ab46a8f995b0d76f8e7, type: 3}
+  playerHealthPrefab: {fileID: 2472613909972763362, guid: 498bca6285c359a4087f49d934d479be, type: 3}
+  playerHealthFillPrefab: {fileID: 4535567976270206058, guid: 42e8ac8cee24a414eab6e3692722c5e0, type: 3}

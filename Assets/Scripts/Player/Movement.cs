@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Movement : MonoBehaviour {
     public float speed = 5;
@@ -42,9 +43,12 @@ public class Movement : MonoBehaviour {
         }
     }
 
-    private void HandlePlayerSpawned(NetworkObject playerSword) {
+    private void HandlePlayerSpawned(NetworkObject playerSword, NetworkObject playerCanvas,
+        NetworkObject playerHealth, NetworkObject playerHealthFill) {
         weapon = playerSword.GetComponent<WeaponMovement>();
         weapon.target = transform;
+        this.playerCanvas = playerCanvas.GetComponent<PlayerCanvas>();
+        this.playerCanvas.healthFill = playerHealthFill.GetComponent<Image>();
         startRotationSpeed = weapon.orbitDegreesPerSec;
     }
 
@@ -87,18 +91,20 @@ public class Movement : MonoBehaviour {
     }
 
     public IEnumerator GetHit(Vector3 dir, float duration, PolygonCollider2D collider, bool getDmg = true) {
-        bool isDead = playerCanvas.DecreaseHealth();
-        knockback = true;
-        rb.AddForce(dir * knockbackForce);
-        yield return new WaitForSeconds(duration);
-        knockback = false;
-        collider.isTrigger = false;
-        if (isDead)
-        {
-            canvas.SetActive(true);
-            Destroy(gameObject);
-        } 
-        yield break;
+        if (playerCanvas != null) {
+            bool isDead = playerCanvas.DecreaseHealth();
+            knockback = true;
+            rb.AddForce(dir * knockbackForce);
+            yield return new WaitForSeconds(duration);
+            knockback = false;
+            collider.isTrigger = false;
+            if (isDead)
+            {
+                canvas.SetActive(true);
+                Destroy(gameObject);
+            } 
+            yield break;
+        }
     }
 
     public IEnumerator WallHit(Vector3 dir, float duration, PolygonCollider2D collider)
